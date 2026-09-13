@@ -38,6 +38,7 @@ leakage) and **AI quality** (non-determinism, bias, hallucination). Full reasoni
 | BDD scenarios | [`features/*.feature`](features/) | Gherkin scenarios tagged `@funcional`, `@seguranca`, `@ct_ai` |
 | Metrics | [`docs/metrics.md`](docs/metrics.md) | Coverage and defect metrics tracked throughout the project |
 | Automation | [`tests/`](tests/) | Playwright + BDD step definitions for Login and Premium activation `@funcional` scenarios. "Falar com Max" is implemented but skips until the test account has premium access (see [`docs/test-strategy.md`](docs/test-strategy.md)) |
+| Performance | [`performance/`](performance/) | k6 load checks for Login and Premium activation's critical backend calls, with results and a bottleneck writeup |
 | CI | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) *(in progress)* | Pipeline running the automated checks |
 
 ## Repository structure
