@@ -1,0 +1,29 @@
+name: CI
+
+# Placeholder pipeline. It documents the intended structure and runs a
+# no-op check for now; the real job (commented below) will be enabled once
+# the automation suite lands in tests/ (see docs/test-strategy.md).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Automation suite not implemented yet
+        run: echo "See tests/ and docs/test-strategy.md for the planned automation approach."
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #     - run: npm ci
+  #     - run: npx cypress run --env grepTags=@funcional
