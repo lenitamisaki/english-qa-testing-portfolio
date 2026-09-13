@@ -121,7 +121,7 @@ Funcionalidade: Login e Autenticação
   @seguranca
   Cenário: Sessão expira após período de inatividade
     Dado que estou autenticada no sistema
-    Quando permanço inativa por tempo superior ao limite definido
+    Quando permaneço inativa por tempo superior ao limite definido
     E tento realizar uma ação que exige autenticação
     Então devo ser desconectada e levada à tela de login
 
