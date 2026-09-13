@@ -8,6 +8,7 @@ cypress/downloads/
 playwright-report/
 test-results/
 coverage/
+.features-gen/
 
 # Environment
 .env

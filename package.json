@@ -1,0 +1,16 @@
+{
+  "name": "english-qa-testing-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automation suite for the English QA testing portfolio (Playwright + BDD)",
+  "scripts": {
+    "test": "bddgen && playwright test",
+    "test:headed": "bddgen && playwright test --headed",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "dotenv": "^17.2.3",
+    "playwright-bdd": "^9.2.1"
+  }
+}

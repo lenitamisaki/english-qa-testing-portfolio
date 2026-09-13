@@ -30,13 +30,18 @@ Updated continuously so the final compilation is a sum, not an archaeology exerc
 | Premium | | | |
 | Falar com Max | | | |
 
-## Automation coverage *(next phase)*
+## Automation coverage
 
-| Screen | Scenarios | Automated | % |
+| Screen | Scenarios (@funcional) | Automated | % |
 |--------|----------:|----------:|--:|
-| Login | | | |
-| Premium | | | |
-| Falar com Max | | | |
+| Login | 6 | 6 | 100% |
+| Premium | 5 | 5 (2 gated behind manual run — see README) | 100% |
+| Falar com Max | 3 | 3 (skip until account has premium) | 100%¹ |
+
+¹ Step definitions exist and run, but assert nothing meaningful yet since the
+screen is inaccessible without premium — they self-skip rather than fail.
+@seguranca and @ct_ai scenarios remain manual/exploratory for now, per the
+automation approach in `test-strategy.md`.
 
 ## Notes
 

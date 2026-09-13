@@ -37,8 +37,8 @@ leakage) and **AI quality** (non-determinism, bias, hallucination). Full reasoni
 | Test strategy | [`docs/test-strategy.md`](docs/test-strategy.md) | Risk-based, shift-left, BDD, automation and AI approach |
 | BDD scenarios | [`features/*.feature`](features/) | Gherkin scenarios tagged `@funcional`, `@seguranca`, `@ct_ai` |
 | Metrics | [`docs/metrics.md`](docs/metrics.md) | Coverage and defect metrics tracked throughout the project |
-| Automation | [`tests/`](tests/) *(in progress)* | Cypress / Playwright suites for the functional scenarios |
-| CI | [`.github/workflows/`](.github/workflows/) *(in progress)* | Pipeline running the automated checks |
+| Automation | [`tests/`](tests/) | Playwright + BDD step definitions for Login and Premium activation `@funcional` scenarios. "Falar com Max" is implemented but skips until the test account has premium access (see [`docs/test-strategy.md`](docs/test-strategy.md)) |
+| CI | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) *(in progress)* | Pipeline running the automated checks |
 
 ## Repository structure
 
@@ -54,10 +54,33 @@ leakage) and **AI quality** (non-determinism, bias, hallucination). Full reasoni
 │   ├── login_autenticacao.feature
 │   ├── ativar_premium.feature
 │   └── falar_com_max.feature
-├── tests/            # automation suite (next phase)
+├── tests/
+│   ├── pages/          # page objects (auth, premium)
+│   ├── steps/          # Gherkin step definitions
+│   └── support/        # shared test helpers (auth session)
 ├── bug-reports/       # defect reports (next phase)
 └── .github/workflows/ # CI pipeline (next phase)
 ```
+
+## Running the automation suite
+
+```bash
+npm install
+npx playwright install chromium
+cp .env.example .env   # fill in BASE_URL, TEST_USER_EMAIL, TEST_USER_PASSWORD
+npm test
+```
+
+`TEST_USER_EMAIL`/`TEST_USER_PASSWORD` must be a pre-registered, **email-confirmed**
+account — Supabase (the auth provider behind this app) rejects login for accounts
+created but never confirmed, so a freshly self-registered user won't work here.
+
+The suite runs `@funcional` scenarios only. "Ativar premium com cupom válido" and
+"Conteúdo premium fica visível após ativação" consume the real activation coupon on
+whichever account you point the suite at — run those deliberately, not as part of a
+routine `npm test`, unless you're using an account you don't mind activating. The
+three "Falar com Max" scenarios are implemented but skip automatically until that
+account has premium access, since the chat is gated behind it.
 
 ## Testing approach at a glance
 

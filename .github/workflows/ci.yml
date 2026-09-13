@@ -1,8 +1,11 @@
 name: CI
 
-# Placeholder pipeline. It documents the intended structure and runs a
-# no-op check for now; the real job (commented below) will be enabled once
-# the automation suite lands in tests/ (see docs/test-strategy.md).
+# Runs the @funcional Playwright suite against the deployed app on every push
+# and PR. Requires TEST_USER_EMAIL / TEST_USER_PASSWORD repo secrets — a
+# pre-registered, email-confirmed account (see README "Running the automation
+# suite"). The two scenarios that consume the real premium activation coupon
+# are excluded here on purpose: they change real account state and are meant
+# to be run deliberately, not on every push.
 
 on:
   push:
@@ -11,19 +14,22 @@ on:
     branches: [main]
 
 jobs:
-  placeholder:
+  test:
     runs-on: ubuntu-latest
+    env:
+      TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+      TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
-      - name: Automation suite not implemented yet
-        run: echo "See tests/ and docs/test-strategy.md for the planned automation approach."
-
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-  #     - run: npm ci
-  #     - run: npx cypress run --env grepTags=@funcional
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --grep-invert "cupom válido|fica visível após ativação"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
